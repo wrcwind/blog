@@ -1,0 +1,48 @@
+---
+interface Props {
+  tags: string[];
+  currentTag?: string;
+}
+
+const { tags, currentTag } = Astro.props;
+---
+
+<div class="tag-list">
+  <a href="/tags" class:list={['tag-item', { active: !currentTag }]}>
+    全部
+  </a>
+  {tags.map(tag => (
+    <a href={`/tags/${tag}`} class:list={['tag-item', { active: tag === currentTag }]}>
+      {tag}
+    </a>
+  ))}
+</div>
+
+<style>
+  .tag-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: 1rem 0;
+  }
+
+  .tag-item {
+    padding: 0.4rem 1rem;
+    background: var(--color-bg-secondary);
+    border-radius: 9999px;
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+    transition: all 0.2s;
+    border: 1px solid transparent;
+  }
+
+  .tag-item:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+  }
+
+  .tag-item.active {
+    background: var(--color-primary);
+    color: white;
+  }
+</style>

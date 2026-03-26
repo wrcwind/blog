@@ -1,0 +1,197 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="关于 - 揉光入野" description="写了8年Java的技术人，从北京到杭州，正在重建与世界的联系。">
+  <div class="about-page">
+    <div class="container">
+      <div class="about-header">
+        <img src="/avatar.jpg" alt="揉光入野" class="about-avatar" />
+        <h1 class="name">🌱 揉光入野</h1>
+        <p class="tagline">写了8年Java的技术人，正在重建与世界的联系</p>
+      </div>
+
+      <div class="about-content">
+        <section class="section">
+          <h2>关于我</h2>
+          <p>
+            我是揉光入野，一个写了8年Java的技术人。
+          </p>
+          <p>
+            我正处于职业的转型期，也是人生节奏的调整期。从北京到杭州，这里的山水像是一个温柔的暂停键，让我第一次意识到：除了学习和工作，我对这个世界的感知太少了。
+          </p>
+          <p>
+            所以，我决定不再只做一个埋头工作的"工具人"，而是想把头抬起来，去重新建立和这个世界的联系。
+          </p>
+        </section>
+
+        <section class="section">
+          <h2>这个博客写什么</h2>
+          <div class="topics">
+            <div class="topic">
+              <span class="topic-icon">🖥️</span>
+              <div>
+                <h3>AI与技术思考</h3>
+                <p>探索AI协同的真实实践，不贩卖焦虑，只记录能落地的经验。</p>
+              </div>
+            </div>
+            <div class="topic">
+              <span class="topic-icon">🍳</span>
+              <div>
+                <h3>生活重建</h3>
+                <p>前半生忽略的"生活经验"，正在补课。做饭、烘焙、找回秩序。</p>
+              </div>
+            </div>
+            <div class="topic">
+              <span class="topic-icon">⛰️</span>
+              <div>
+                <h3>自然与徒步</h3>
+                <p>偏爱真实的山野，用手机记录不被打扰的自然景色，附带路线和胡思乱想。</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <h2>关于名字</h2>
+          <p>
+            「揉光入野」——把光揉进野外，也把温柔揉进日常。我不想做一个垂直的博主，只想做一个真实的分享者。
+          </p>
+        </section>
+
+        <section class="section">
+          <h2>找到我</h2>
+          <ul class="contact">
+            <li><a href="#" target="_blank">小红书</a></li>
+            <li><a href="#" target="_blank">公众号</a></li>
+            <li><a href="https://github.com/" target="_blank">GitHub</a></li>
+          </ul>
+        </section>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .about-page {
+    padding: 3rem 0 5rem;
+  }
+
+  .about-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .about-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 1rem;
+  }
+
+  .name {
+    font-size: 2.25rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    color: var(--color-text);
+  }
+
+  .tagline {
+    color: var(--color-text-secondary);
+    font-size: 1.1rem;
+    max-width: 480px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  .about-content {
+    max-width: var(--content-width);
+    margin: 0 auto;
+  }
+
+  .section {
+    margin-bottom: 2.5rem;
+  }
+
+  .section h2 {
+    font-size: 1.35rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--color-text);
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--color-primary);
+    display: inline-block;
+  }
+
+  .section p {
+    color: var(--color-text-secondary);
+    line-height: 1.8;
+    margin-bottom: 1rem;
+  }
+
+  .topics {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .topic {
+    display: flex;
+    gap: 1rem;
+    padding: 1.25rem;
+    background: var(--color-bg-secondary);
+    border-radius: 12px;
+  }
+
+  .topic-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .topic h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+    color: var(--color-text);
+  }
+
+  .topic p {
+    font-size: 0.9rem;
+    margin-bottom: 0;
+    color: var(--color-text-secondary);
+  }
+
+  .contact {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .contact li a {
+    color: var(--color-primary);
+    font-weight: 500;
+    transition: opacity 0.2s;
+  }
+
+  .contact li a:hover {
+    opacity: 0.8;
+  }
+
+  @media (max-width: 640px) {
+    .about-page {
+      padding: 2rem 1rem 4rem;
+    }
+
+    .name {
+      font-size: 1.75rem;
+    }
+
+    .topic {
+      padding: 1rem;
+    }
+  }
+</style>

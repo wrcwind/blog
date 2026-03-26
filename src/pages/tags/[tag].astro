@@ -1,0 +1,65 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostList from '../../components/PostList.astro';
+import TagList from '../../components/TagList.astro';
+import { getCollection } from 'astro:content';
+import { calculateReadingTime } from '../../utils/index.ts';
+
+export async function getStaticPaths() {
+  const allPosts = await getCollection('blog');
+  const allTags = [...new Set(allPosts.flatMap(post => post.data.tags))];
+  
+  return allTags.map(tag => ({
+    params: { tag },
+    props: {
+      tag,
+      posts: allPosts
+        .filter(post => post.data.tags.includes(tag))
+        .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+        .map(post => ({
+          ...post,
+          readingTime: calculateReadingTime(post.body ?? '')
+        })),
+    },
+  }));
+}
+
+const { tag, posts } = Astro.props;
+
+const allPosts = await getCollection('blog');
+const allTags = [...new Set(allPosts.flatMap(post => post.data.tags))];
+---
+
+<BaseLayout title={`#${tag} - 揉光入野`} description={`标签 ${tag} 下的所有文章`}>
+  <div class="tag-page">
+    <div class="container">
+      <div class="page-header">
+        <h1 class="page-title">#{tag}</h1>
+        <p class="page-subtitle">共 {posts.length} 篇文章</p>
+      </div>
+      <TagList tags={allTags} currentTag={tag} />
+      <PostList posts={posts} />
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .tag-page {
+    padding: 3rem 0 5rem;
+  }
+
+  .page-header {
+    margin-bottom: 1rem;
+  }
+
+  .page-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--color-primary);
+  }
+
+  .page-subtitle {
+    color: var(--color-text-secondary);
+  }
+</style>

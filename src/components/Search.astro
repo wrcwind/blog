@@ -1,0 +1,224 @@
+---
+---
+
+<button class="search-trigger" id="search-trigger" title="搜索" aria-label="搜索文章">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <circle cx="11" cy="11" r="8"/>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+  </svg>
+</button>
+
+<div class="search-modal" id="search-modal">
+  <div class="search-container">
+    <div class="search-header">
+      <input type="text" class="search-input" id="search-input" placeholder="搜索文章..." />
+      <button class="search-close" id="search-close">ESC</button>
+    </div>
+    <div id="search-results"></div>
+  </div>
+</div>
+
+<script is:inline>
+  const modal = document.getElementById('search-modal');
+  const trigger = document.getElementById('search-trigger');
+  const input = document.getElementById('search-input');
+  const results = document.getElementById('search-results');
+  const closeBtn = document.getElementById('search-close');
+  let pagefind = null;
+
+  async function loadPagefind() {
+    if (!pagefind) {
+      try {
+        pagefind = await import('/pagefind/pagefind.js');
+        await pagefind.options({ excerptLength: 15 });
+      } catch (e) {
+        console.log('Pagefind not ready, run npm run build first');
+        return null;
+      }
+    }
+    return pagefind;
+  }
+
+  async function performSearch(query) {
+    if (!query) {
+      results.innerHTML = '<p class="search-hint">输入关键词搜索文章</p>';
+      return;
+    }
+    
+    const pf = await loadPagefind();
+    if (!pf) {
+      results.innerHTML = '<p class="search-hint">请先运行 npm run build 构建搜索索引</p>';
+      return;
+    }
+
+    const search = await pf.search(query);
+    if (search.results.length === 0) {
+      results.innerHTML = '<p class="search-hint">没有找到相关结果</p>';
+      return;
+    }
+
+    const items = await Promise.all(search.results.slice(0, 10).map(r => r.data()));
+    results.innerHTML = items.map(item => `
+      <a href="${item.url}" class="search-result">
+        <h3>${item.meta?.title || 'Untitled'}</h3>
+        <p>${item.excerpt || ''}</p>
+      </a>
+    `).join('');
+  }
+
+  trigger?.addEventListener('click', async () => {
+    modal?.classList.add('active');
+    await loadPagefind();
+    input?.focus();
+  });
+
+  closeBtn?.addEventListener('click', () => {
+    modal?.classList.remove('active');
+  });
+
+  modal?.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      modal.classList.remove('active');
+    }
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      modal?.classList.remove('active');
+    }
+    if (e.key === 'k' && (e.metaKey || e.ctrlKey)) {
+      e.preventDefault();
+      modal?.classList.add('active');
+      input?.focus();
+    }
+  });
+
+  let debounceTimer;
+  input?.addEventListener('input', (e) => {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(() => {
+      performSearch(e.target.value);
+    }, 300);
+  });
+</script>
+
+<style>
+  .search-trigger {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    color: var(--color-text-secondary);
+    border-radius: 8px;
+    transition: all 0.2s;
+  }
+
+  .search-trigger:hover {
+    background: var(--color-bg-secondary);
+    color: var(--color-primary);
+  }
+
+  .search-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 10vh;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s;
+  }
+
+  .search-modal.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .search-container {
+    width: 90%;
+    max-width: 600px;
+    background: var(--color-bg);
+    border-radius: 12px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+  }
+
+  .search-header {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .search-input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    font-size: 1.1rem;
+    color: var(--color-text);
+    outline: none;
+  }
+
+  .search-input::placeholder {
+    color: var(--color-text-secondary);
+  }
+
+  .search-close {
+    padding: 0.25rem 0.5rem;
+    border: 1px solid var(--color-border);
+    background: transparent;
+    color: var(--color-text-secondary);
+    border-radius: 4px;
+    font-size: 0.75rem;
+    cursor: pointer;
+  }
+
+  #search-results {
+    max-height: 400px;
+    overflow-y: auto;
+    padding: 1rem;
+  }
+
+  .search-hint {
+    color: var(--color-text-secondary);
+    text-align: center;
+    padding: 2rem;
+  }
+
+  :global(.search-result) {
+    display: block;
+    padding: 1rem;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+
+  :global(.search-result:hover) {
+    background: var(--color-bg-secondary);
+  }
+
+  :global(.search-result h3) {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin-bottom: 0.5rem;
+  }
+
+  :global(.search-result p) {
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+  }
+
+  :global(.search-result mark) {
+    background: var(--color-primary-light);
+    color: white;
+  }
+</style>

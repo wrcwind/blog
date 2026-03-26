@@ -1,0 +1,225 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="description" content="AI能力在快速进化，但我们的协作方法还停留在手工作坊阶段。驾驭工程提供了一套系统化框架，让人机协作从单次提示词优化升级为整体协作系统。"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="alternate" type="application/rss+xml" title="RSS Feed" href="/rss.xml"><title>驾驭工程入门：从提示词工程到系统化协作</title><script>
+    const theme = localStorage.getItem('theme') || 'light';
+    document.documentElement.setAttribute('data-theme', theme);
+  </script><style>.post[data-astro-cid-gjtny2mx]{max-width:var(--content-width);margin:0 auto;padding:3rem 1.5rem 5rem}.post-header[data-astro-cid-gjtny2mx]{margin-bottom:2.5rem;padding-bottom:1.5rem;border-bottom:1px solid var(--color-border)}.post-title[data-astro-cid-gjtny2mx]{font-size:2.25rem;font-weight:700;line-height:1.3;margin-bottom:1rem;color:var(--color-text)}.post-meta[data-astro-cid-gjtny2mx]{display:flex;align-items:center;gap:.5rem;color:var(--color-text-secondary);font-size:.9rem}.separator[data-astro-cid-gjtny2mx]{color:var(--color-border)}.post-tags[data-astro-cid-gjtny2mx]{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1rem}.tag[data-astro-cid-gjtny2mx]{padding:.25rem .75rem;background:var(--color-bg-secondary);border-radius:9999px;font-size:.85rem;color:var(--color-text-secondary);transition:all .2s}.tag[data-astro-cid-gjtny2mx]:hover{background:var(--color-primary);color:#fff}.post-content[data-astro-cid-gjtny2mx]{font-size:1.1rem;line-height:1.8}.post-content[data-astro-cid-gjtny2mx] h2{font-size:1.75rem;margin:2.5rem 0 1rem;font-weight:600}.post-content[data-astro-cid-gjtny2mx] h3{font-size:1.35rem;margin:2rem 0 .75rem;font-weight:600}.post-content[data-astro-cid-gjtny2mx] p{margin:1.25rem 0}.post-content[data-astro-cid-gjtny2mx] ul,.post-content[data-astro-cid-gjtny2mx] ol{margin:1.25rem 0;padding-left:1.5rem}.post-content[data-astro-cid-gjtny2mx] li{margin:.5rem 0}.post-content[data-astro-cid-gjtny2mx] blockquote{border-left:4px solid var(--color-primary);padding-left:1.25rem;margin:1.5rem 0;color:var(--color-text-secondary);font-style:italic}.post-content[data-astro-cid-gjtny2mx] img{border-radius:8px;margin:1.5rem 0}.post-content[data-astro-cid-gjtny2mx] hr{border:none;border-top:1px solid var(--color-border);margin:2rem 0}.post-content[data-astro-cid-gjtny2mx] table{width:100%;border-collapse:collapse;margin:1.5rem 0;font-size:.95rem}.post-content[data-astro-cid-gjtny2mx] th,.post-content[data-astro-cid-gjtny2mx] td{padding:.6rem .8rem;text-align:left;border:1px solid var(--color-border)}.post-content[data-astro-cid-gjtny2mx] th{background:var(--color-bg-secondary);font-weight:600}.post-content[data-astro-cid-gjtny2mx] tr:nth-child(2n){background:var(--color-bg-secondary)}@media(max-width:640px){.post[data-astro-cid-gjtny2mx]{padding:2rem 1rem 4rem}.post-title[data-astro-cid-gjtny2mx]{font-size:1.75rem}}
+</style>
+<link rel="stylesheet" href="/_astro/_slug_.DTcdsG88.css"></head> <body> <header class="header" data-astro-cid-3ef6ksr2> <div class="container" data-astro-cid-3ef6ksr2> <nav class="nav" data-astro-cid-3ef6ksr2> <a href="/" class="logo" data-astro-cid-3ef6ksr2> <span class="logo-icon" data-astro-cid-3ef6ksr2>🌱</span> <span class="logo-text" data-astro-cid-3ef6ksr2>揉光入野</span> </a> <div class="nav-links" data-astro-cid-3ef6ksr2> <a href="/" data-astro-cid-3ef6ksr2>首页</a> <a href="/blog" data-astro-cid-3ef6ksr2>文章</a> <a href="/tags" data-astro-cid-3ef6ksr2>标签</a> <a href="/about" data-astro-cid-3ef6ksr2>关于</a> </div> <div class="nav-actions" data-astro-cid-3ef6ksr2> <button class="search-trigger" id="search-trigger" title="搜索" aria-label="搜索文章" data-astro-cid-otpdt6jm> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-astro-cid-otpdt6jm> <circle cx="11" cy="11" r="8" data-astro-cid-otpdt6jm></circle> <line x1="21" y1="21" x2="16.65" y2="16.65" data-astro-cid-otpdt6jm></line> </svg> </button> <div class="search-modal" id="search-modal" data-astro-cid-otpdt6jm> <div class="search-container" data-astro-cid-otpdt6jm> <div class="search-header" data-astro-cid-otpdt6jm> <input type="text" class="search-input" id="search-input" placeholder="搜索文章..." data-astro-cid-otpdt6jm> <button class="search-close" id="search-close" data-astro-cid-otpdt6jm>ESC</button> </div> <div id="search-results" data-astro-cid-otpdt6jm></div> </div> </div> <script>
+  const modal = document.getElementById('search-modal');
+  const trigger = document.getElementById('search-trigger');
+  const input = document.getElementById('search-input');
+  const results = document.getElementById('search-results');
+  const closeBtn = document.getElementById('search-close');
+  let pagefind = null;
+
+  async function loadPagefind() {
+    if (!pagefind) {
+      try {
+        pagefind = await import('/pagefind/pagefind.js');
+        await pagefind.options({ excerptLength: 15 });
+      } catch (e) {
+        console.log('Pagefind not ready, run npm run build first');
+        return null;
+      }
+    }
+    return pagefind;
+  }
+
+  async function performSearch(query) {
+    if (!query) {
+      results.innerHTML = '<p class="search-hint">输入关键词搜索文章</p>';
+      return;
+    }
+    
+    const pf = await loadPagefind();
+    if (!pf) {
+      results.innerHTML = '<p class="search-hint">请先运行 npm run build 构建搜索索引</p>';
+      return;
+    }
+
+    const search = await pf.search(query);
+    if (search.results.length === 0) {
+      results.innerHTML = '<p class="search-hint">没有找到相关结果</p>';
+      return;
+    }
+
+    const items = await Promise.all(search.results.slice(0, 10).map(r => r.data()));
+    results.innerHTML = items.map(item => `
+      <a href="${item.url}" class="search-result">
+        <h3>${item.meta?.title || 'Untitled'}</h3>
+        <p>${item.excerpt || ''}</p>
+      </a>
+    `).join('');
+  }
+
+  trigger?.addEventListener('click', async () => {
+    modal?.classList.add('active');
+    await loadPagefind();
+    input?.focus();
+  });
+
+  closeBtn?.addEventListener('click', () => {
+    modal?.classList.remove('active');
+  });
+
+  modal?.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      modal.classList.remove('active');
+    }
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      modal?.classList.remove('active');
+    }
+    if (e.key === 'k' && (e.metaKey || e.ctrlKey)) {
+      e.preventDefault();
+      modal?.classList.add('active');
+      input?.focus();
+    }
+  });
+
+  let debounceTimer;
+  input?.addEventListener('input', (e) => {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(() => {
+      performSearch(e.target.value);
+    }, 300);
+  });
+</script>  <button class="theme-toggle" id="theme-toggle" title="切换主题" aria-label="切换深色/浅色模式" data-astro-cid-x3pjskd3> <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-astro-cid-x3pjskd3> <circle cx="12" cy="12" r="5" data-astro-cid-x3pjskd3></circle> <line x1="12" y1="1" x2="12" y2="3" data-astro-cid-x3pjskd3></line> <line x1="12" y1="21" x2="12" y2="23" data-astro-cid-x3pjskd3></line> <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" data-astro-cid-x3pjskd3></line> <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" data-astro-cid-x3pjskd3></line> <line x1="1" y1="12" x2="3" y2="12" data-astro-cid-x3pjskd3></line> <line x1="21" y1="12" x2="23" y2="12" data-astro-cid-x3pjskd3></line> <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" data-astro-cid-x3pjskd3></line> <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" data-astro-cid-x3pjskd3></line> </svg> <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-astro-cid-x3pjskd3> <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" data-astro-cid-x3pjskd3></path> </svg> </button> <script type="module">const c=document.getElementById("theme-toggle");function o(){const t=document.documentElement.getAttribute("data-theme");c?.classList.toggle("dark",t==="dark"),document.querySelectorAll("pre.astro-code").forEach(e=>{e.style.colorScheme=t==="dark"?"dark":"light"})}o();c?.addEventListener("click",()=>{const e=document.documentElement.getAttribute("data-theme")==="dark"?"light":"dark";document.documentElement.setAttribute("data-theme",e),localStorage.setItem("theme",e),o()});</script>  <a href="/rss.xml" class="rss-link" title="RSS 订阅" aria-label="RSS 订阅" data-astro-cid-3ef6ksr2> <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" data-astro-cid-3ef6ksr2> <path d="M6.18 15.64a2.18 2.18 0 0 1 2.18 2.18C8.36 19.01 7.38 20 6.18 20C4.98 20 4 19.01 4 17.82a2.18 2.18 0 0 1 2.18-2.18M4 4.44A15.56 15.56 0 0 1 19.56 20h-2.83A12.73 12.73 0 0 0 4 7.27V4.44m0 5.66a9.9 9.9 0 0 1 9.9 9.9h-2.83A7.07 7.07 0 0 0 4 12.93V10.1z" data-astro-cid-3ef6ksr2></path> </svg> </a> </div> </nav> </div> </header>  <main>  <article class="post" data-astro-cid-gjtny2mx> <div class="post-header" data-astro-cid-gjtny2mx> <h1 class="post-title" data-astro-cid-gjtny2mx>驾驭工程入门：从提示词工程到系统化协作</h1> <div class="post-meta" data-astro-cid-gjtny2mx> <time datetime="2026-03-25T00:00:00.000Z" data-astro-cid-gjtny2mx>2026年3月25日</time> <span class="separator" data-astro-cid-gjtny2mx>·</span> <span data-astro-cid-gjtny2mx>4 分钟阅读</span> </div> <div class="post-tags" data-astro-cid-gjtny2mx> <a href="/tags/AI协同" class="tag" data-astro-cid-gjtny2mx>#AI协同</a><a href="/tags/驾驭工程" class="tag" data-astro-cid-gjtny2mx>#驾驭工程</a> </div> </div> <div class="post-content" data-astro-cid-gjtny2mx>  <h2 id="一个真实的案例">一个真实的案例</h2>
+<p>OpenAI团队用3名工程师，在5个月内完成了约100万行代码的开发。</p>
+<p>如果用传统方法，这需要30+人的团队，耗时12个月。</p>
+<p>他们是怎么做到的？答案就是<strong>驾驭工程（Harness Engineering）</strong>。</p>
+<hr>
+<h2 id="提示词工程的困境">提示词工程的困境</h2>
+<p>过去一年，提示词工程（Prompt Engineering）成为AI使用的主流方法。核心思想很简单：优化提示词，提升AI输出质量。</p>
+<p>但在实践中，我发现提示词工程有三个致命问题：</p>
+<h3 id="问题一缺乏系统性">问题一：缺乏系统性</h3>
+<p>提示词工程关注单次交互质量，但复杂任务通常需要多次交互。</p>
+<p>比如写一篇技术文章，需要：</p>
+<ul>
+<li>确定主题和大纲</li>
+<li>收集参考资料</li>
+<li>撰写初稿</li>
+<li>编辑优化</li>
+<li>最终审校</li>
+</ul>
+<p>如果每次交互都独立设计提示词，效率极低，而且信息容易丢失。</p>
+<h3 id="问题二可复制性差">问题二：可复制性差</h3>
+<p>一个在场景A中有效的提示词，在场景B中可能完全失效。</p>
+<p>我曾经花了一个下午优化了一个代码生成的提示词，效果很好。但换了一个项目，同样的提示词就不灵了。</p>
+<p>为什么？因为上下文变了，任务特点变了，AI的能力边界也变了。</p>
+<h3 id="问题三缺乏边界管理">问题三：缺乏边界管理</h3>
+<p>提示词工程没有明确的边界管理机制。</p>
+<p>我曾经让AI负责一个模块的架构设计，结果AI给出了一套”完美”的方案，但完全忽略了我们的技术栈约束和团队能力。</p>
+<p>问题出在哪里？我没有明确AI的边界——AI擅长生成方案，但不了解我们的实际情况。</p>
+<hr>
+<h2 id="什么是驾驭工程">什么是驾驭工程？</h2>
+<p>驾驭工程是一种系统化的方法论，用于构建和优化人与AI的协作关系。</p>
+<p><strong>核心思想</strong>：把AI当作一个需要被系统化驾驭的复杂系统，而不是一个简单的工具。</p>
+<h3 id="与提示词工程的区别">与提示词工程的区别</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>维度</th><th>提示词工程</th><th>驾驭工程</th></tr></thead><tbody><tr><td>关注点</td><td>单次交互质量</td><td>整体协作系统</td></tr><tr><td>时间跨度</td><td>一次对话</td><td>整个项目周期</td></tr><tr><td>可复制性</td><td>低（依赖场景）</td><td>高（系统化方法）</td></tr><tr><td>边界管理</td><td>无</td><td>明确的边界机制</td></tr></tbody></table>
+<h3 id="理论基础">理论基础</h3>
+<p>驾驭工程借鉴了多个领域的理论：</p>
+<p><strong>控制论</strong>：通过反馈机制控制动态系统。驾驭工程建立了”设计-执行-评估-优化”的反馈闭环。</p>
+<p><strong>系统论</strong>：整体大于部分之和。驾驭工程把人机协作看作一个系统，关注整体性能。</p>
+<p><strong>认知科学</strong>：认知负荷理论指导任务分配，让人类和AI各自承担适合的任务。</p>
+<p><strong>软件工程</strong>：迭代、测试、重构的思想被应用到人机协作中。</p>
+<hr>
+<h2 id="为什么需要驾驭工程">为什么需要驾驭工程？</h2>
+<p>在实践AI协作的过程中，我越来越意识到：<strong>AI的能力在快速进化，但我们的协作方法还停留在”手工作坊”阶段</strong>。</p>
+<h3 id="ai能力的不确定性">AI能力的不确定性</h3>
+<p>今天AI能做的事情，明天可能就过时了。今天AI做不好的事情，明天可能就擅长了。</p>
+<p>如果只关注单次提示词优化，你会发现自己一直在追赶AI的进化速度，疲于奔命。</p>
+<p>驾驭工程提供了一个系统化的框架，让你能够：</p>
+<ul>
+<li>快速识别AI的能力边界</li>
+<li>建立持续优化的反馈机制</li>
+<li>积累可复用的协作经验</li>
+</ul>
+<h3 id="任务复杂度的提升">任务复杂度的提升</h3>
+<p>随着AI能力的提升，我们开始尝试更复杂的任务：</p>
+<ul>
+<li>从生成一段代码，到开发一个完整模块</li>
+<li>从写一篇文章，到构建一个内容体系</li>
+<li>从回答一个问题，到解决一个复杂问题</li>
+</ul>
+<p>这些复杂任务需要系统化的协作方法，而不是简单的提示词优化。</p>
+<h3 id="团队协作的需要">团队协作的需要</h3>
+<p>当团队开始使用AI时，问题更加突出：</p>
+<ul>
+<li>每个人都有自己的提示词风格，难以统一</li>
+<li>经验难以传承，新人需要重新摸索</li>
+<li>协作成本高，效率低下</li>
+</ul>
+<p>驾驭工程提供了标准化的协作框架，降低团队协作成本。</p>
+<hr>
+<h2 id="驾驭工程的核心框架">驾驭工程的核心框架</h2>
+<p>驾驭工程的核心框架包括两个部分：<strong>三层架构</strong>和<strong>四个核心机制</strong>。</p>
+<h3 id="三层架构">三层架构</h3>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>系统层（规模化）</span></span>
+<span class="line"><span>    ↓ 提供知识库、工作流、数据分析</span></span>
+<span class="line"><span>策略层（规划）</span></span>
+<span class="line"><span>    ↓ 提供任务分解、依赖管理、质量检查</span></span>
+<span class="line"><span>操作层（执行）</span></span>
+<span class="line"><span>    ↓ 提供提示词、上下文、输出引导</span></span></code></pre>
+<p><strong>操作层</strong>：关注单次交互质量，对应传统的提示词工程。</p>
+<p><strong>策略层</strong>：关注任务的整体规划，是驾驭工程的核心。</p>
+<p><strong>系统层</strong>：关注整个协作系统的优化，目标是实现规模化。</p>
+<h3 id="四个核心机制">四个核心机制</h3>
+<p>在实践驾驭工程的过程中，我发现这四个机制中，<strong>反馈闭环</strong>是最关键的。</p>
+<p>为什么？因为AI的能力在快速进化，今天有效的策略明天可能就过时了。只有建立持续优化的反馈闭环，才能跟上AI的进化速度。</p>
+<ul>
+<li><strong>能力映射</strong>：匹配AI能力和任务需求</li>
+<li><strong>反馈闭环</strong>：持续优化协作过程</li>
+<li><strong>边界管理</strong>：防止AI超出能力范围</li>
+<li><strong>知识注入</strong>：提升AI专业性</li>
+</ul>
+<hr>
+<h2 id="下一步">下一步</h2>
+<p>在下一篇文章中，我会详细介绍驾驭工程的实践方法：</p>
+<ul>
+<li>三层架构的具体实现</li>
+<li>四个核心机制的操作细节</li>
+<li>实际案例和最佳实践</li>
+</ul>
+<p>如果你想在工作中应用驾驭工程，建议先从简单任务开始：</p>
+<ol>
+<li>选择一个你经常做的任务类型</li>
+<li>测试AI在这个任务上的能力边界</li>
+<li>设计反馈闭环，持续优化</li>
+<li>记录经验，建立知识库</li>
+</ol>
+<hr>
+<p><strong>思考题</strong>：你在AI协作中遇到过哪些挑战？提示词工程的哪些问题让你困扰？欢迎分享你的经验。</p>  </div> </article>  </main> <footer class="footer" data-astro-cid-sz7xmlte> <div class="container" data-astro-cid-sz7xmlte> <p class="copyright" data-astro-cid-sz7xmlte>
+© 2024 <a href="/" data-astro-cid-sz7xmlte>揉光入野</a>. 用热爱和代码构建。
+</p> </div> </footer>  </body></html> 

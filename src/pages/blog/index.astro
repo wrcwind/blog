@@ -1,0 +1,42 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostList from '../../components/PostList.astro';
+import { getCollection } from 'astro:content';
+import { calculateReadingTime } from '../../utils/index.ts';
+
+const allPosts = await getCollection('blog');
+const posts = allPosts
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .map(post => ({
+    ...post,
+    readingTime: calculateReadingTime(post.body ?? '')
+  }));
+---
+
+<BaseLayout title="文章列表 - 揉光入野" description="所有文章">
+  <div class="blog-page">
+    <div class="container">
+      <h1 class="page-title">所有文章</h1>
+      <p class="page-subtitle">共 {posts.length} 篇文章</p>
+      <PostList posts={posts} />
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .blog-page {
+    padding: 3rem 0 5rem;
+  }
+
+  .page-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--color-text);
+  }
+
+  .page-subtitle {
+    color: var(--color-text-secondary);
+    margin-bottom: 2rem;
+  }
+</style>
