@@ -6,9 +6,10 @@ interface Props {
   tags: string[];
   slug: string;
   readingTime: number;
+  cover?: string;
 }
 
-const { title, description, pubDate, tags, slug, readingTime } = Astro.props;
+const { title, description, pubDate, tags, slug, readingTime, cover } = Astro.props;
 
 const formattedDate = pubDate.toLocaleDateString('zh-CN', {
   year: 'numeric',
@@ -19,6 +20,11 @@ const formattedDate = pubDate.toLocaleDateString('zh-CN', {
 
 <article class="post-card">
   <a href={`/blog/${slug}`} class="card-link">
+    {cover && (
+      <div class="card-cover">
+        <img src={cover} alt={title} loading="lazy" />
+      </div>
+    )}
     <div class="card-content">
       <h2 class="card-title">{title}</h2>
       {description && <p class="card-description">{description}</p>}
@@ -44,6 +50,7 @@ const formattedDate = pubDate.toLocaleDateString('zh-CN', {
     border: 1px solid var(--color-border);
     border-radius: 12px;
     transition: all 0.2s;
+    overflow: hidden;
   }
 
   .post-card:hover {
@@ -54,9 +61,29 @@ const formattedDate = pubDate.toLocaleDateString('zh-CN', {
 
   .card-link {
     display: block;
-    padding: 1.5rem;
     color: inherit;
     text-decoration: none;
+  }
+
+  .card-cover {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+  }
+
+  .card-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s;
+  }
+
+  .post-card:hover .card-cover img {
+    transform: scale(1.05);
+  }
+
+  .card-content {
+    padding: 1.5rem;
   }
 
   .card-title {

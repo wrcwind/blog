@@ -8,6 +8,7 @@ interface Post {
     pubDate: Date;
     tags: string[];
     description?: string;
+    cover?: string;
   };
   readingTime: number;
 }
@@ -28,6 +29,7 @@ const { posts } = Astro.props;
       tags={post.data.tags}
       slug={post.slug}
       readingTime={post.readingTime}
+      cover={post.data.cover}
     />
   ))}
 </div>
