@@ -62,9 +62,18 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <section class="section">
           <h2>找到我</h2>
           <ul class="contact">
-            <li><a href="#" target="_blank">小红书</a></li>
-            <li><a href="#" target="_blank">公众号</a></li>
-            <li><a href="https://github.com/" target="_blank">GitHub</a></li>
+            <li class="contact-item">
+              <a href="#" target="_blank">小红书</a>
+              <div class="qr-popup">
+                <img src="/images/xiaohongshu-qr.png" alt="小红书二维码" />
+              </div>
+            </li>
+            <li class="contact-item">
+              <a href="#" target="_blank">公众号</a>
+              <div class="qr-popup">
+                <img src="/images/gzh-qr.png" alt="公众号二维码" />
+              </div>
+            </li>
           </ul>
         </section>
       </div>
@@ -179,6 +188,46 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
   .contact li a:hover {
     opacity: 0.8;
+  }
+
+  .contact-item {
+    position: relative;
+  }
+
+  .qr-popup {
+    display: none;
+    position: absolute;
+    bottom: calc(100% + 12px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    padding: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+    z-index: 100;
+    white-space: nowrap;
+  }
+
+  .qr-popup::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 8px solid transparent;
+    border-top-color: var(--color-border);
+  }
+
+  .contact-item:hover .qr-popup {
+    display: block;
+  }
+
+  .qr-popup img {
+    width: 140px;
+    height: 140px;
+    object-fit: contain;
+    display: block;
   }
 
   @media (max-width: 640px) {
