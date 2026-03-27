@@ -11,6 +11,9 @@ interface Props {
 
 const { title, description, pubDate, tags, slug, readingTime, cover } = Astro.props;
 
+// 从 slug 推断封面图
+const coverImage = cover || (slug?.includes('驾驭工程入门') ? '/images/驾驭工程入门-cover.jpg' : undefined);
+
 const formattedDate = pubDate.toLocaleDateString('zh-CN', {
   year: 'numeric',
   month: 'long',
@@ -20,9 +23,9 @@ const formattedDate = pubDate.toLocaleDateString('zh-CN', {
 
 <article class="post-card">
   <a href={`/blog/${slug}`} class="card-link">
-    {cover && (
+    {coverImage && (
       <div class="card-cover">
-        <img src={cover} alt={title} loading="lazy" />
+        <img src={coverImage} alt={title} loading="lazy" />
       </div>
     )}
     <div class="card-content">
