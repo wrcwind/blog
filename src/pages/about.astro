@@ -63,15 +63,15 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <h2>找到我</h2>
           <ul class="contact">
             <li class="contact-item">
-              <a href="#" target="_blank">小红书</a>
+              <span class="contact-link">小红书</span>
               <div class="qr-popup">
-                <img src="/images/xiaohongshu-qr.jpg" alt="小红书二维码" />
+                <img src="/images/xiaohongshu-qr.jpg" width="140" height="140" alt="小红书二维码" />
               </div>
             </li>
             <li class="contact-item">
-              <a href="#" target="_blank">公众号</a>
+              <span class="contact-link">公众号</span>
               <div class="qr-popup">
-                <img src="/images/gzh-qr.jpg" alt="公众号二维码" />
+                <img src="/images/gzh-qr.jpg" width="140" height="140" alt="公众号二维码" />
               </div>
             </li>
           </ul>
@@ -180,13 +180,16 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     flex-wrap: wrap;
   }
 
-  .contact li a {
+  .contact li a,
+  .contact-link {
     color: var(--color-primary);
     font-weight: 500;
     transition: opacity 0.2s;
+    cursor: pointer;
   }
 
-  .contact li a:hover {
+  .contact li a:hover,
+  .contact-link:hover {
     opacity: 0.8;
   }
 
@@ -197,16 +200,16 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   .qr-popup {
     display: none;
     position: absolute;
-    bottom: calc(100% + 12px);
+    bottom: 100%;
     left: 50%;
     transform: translateX(-50%);
-    background: var(--color-bg);
-    border: 1px solid var(--color-border);
+    background: white;
+    border: 1px solid #ccc;
     border-radius: 12px;
-    padding: 12px;
+    padding: 10px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
-    z-index: 100;
-    white-space: nowrap;
+    z-index: 9999;
+    width: 160px;
   }
 
   .qr-popup::after {
@@ -216,7 +219,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     left: 50%;
     transform: translateX(-50%);
     border: 8px solid transparent;
-    border-top-color: var(--color-border);
+    border-top-color: #ccc;
   }
 
   .contact-item:hover .qr-popup {
@@ -226,8 +229,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   .qr-popup img {
     width: 140px;
     height: 140px;
-    object-fit: contain;
     display: block;
+    object-fit: cover;
   }
 
   @media (max-width: 640px) {
