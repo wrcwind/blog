@@ -91,6 +91,14 @@
       modal?.classList.add('active');
       input?.focus();
     }
+    if (e.key === '/' && !modal?.classList.contains('active')) {
+      var tag = document.activeElement?.tagName;
+      if (tag !== 'INPUT' && tag !== 'TEXTAREA') {
+        e.preventDefault();
+        modal?.classList.add('active');
+        input?.focus();
+      }
+    }
   });
 
   let debounceTimer;
