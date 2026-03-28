@@ -1,6 +1,6 @@
 ---
 title: "驾驭工程案例研究：从OpenAI到Trae"
-pubDate: 2026-03-28
+pubDate: 2026-03-31
 tags: ["AI协同", "驾驭工程"]
 description: "通过OpenAI Codex和Trae两个真实案例，展示驾驭工程在实际项目中的应用。"
 ---

@@ -3,7 +3,7 @@ import sitemap from '@astrojs/sitemap';
 import remarkGfm from 'remark-gfm';
 
 export default defineConfig({
-  site: 'https://your-blog.vercel.app',
+  site: 'https://rouguang.top',
   integrations: [sitemap()],
   markdown: {
     remarkPlugins: [remarkGfm],
