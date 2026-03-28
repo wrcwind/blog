@@ -203,8 +203,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     bottom: 100%;
     left: 50%;
     transform: translateX(-50%);
-    background: white;
-    border: 1px solid #ccc;
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
     border-radius: 12px;
     padding: 10px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
@@ -219,7 +219,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     left: 50%;
     transform: translateX(-50%);
     border: 8px solid transparent;
-    border-top-color: #ccc;
+    border-top-color: var(--color-border);
   }
 
   .contact-item:hover .qr-popup {

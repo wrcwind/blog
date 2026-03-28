@@ -9,7 +9,7 @@ export async function GET(context) {
 
   return rss({
     title: '揉光入野',
-    description: '一个简洁的技术博客',
+    description: 'AI技术思考、生活重建与自然记录',
     site: context.site,
     items: sortedPosts.map(post => ({
       title: post.data.title,

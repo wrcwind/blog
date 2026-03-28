@@ -10,7 +10,7 @@ import Search from './Search.astro';
         <span class="logo-icon">🌱</span>
         <span class="logo-text">揉光入野</span>
       </a>
-      <div class="nav-links">
+      <div class="nav-links" id="navLinks">
         <a href="/">首页</a>
         <a href="/blog">文章</a>
         <a href="/tags">标签</a>
@@ -24,10 +24,32 @@ import Search from './Search.astro';
             <path d="M6.18 15.64a2.18 2.18 0 0 1 2.18 2.18C8.36 19.01 7.38 20 6.18 20C4.98 20 4 19.01 4 17.82a2.18 2.18 0 0 1 2.18-2.18M4 4.44A15.56 15.56 0 0 1 19.56 20h-2.83A12.73 12.73 0 0 0 4 7.27V4.44m0 5.66a9.9 9.9 0 0 1 9.9 9.9h-2.83A7.07 7.07 0 0 0 4 12.93V10.1z"/>
           </svg>
         </a>
+        <button class="menu-toggle" id="menuToggle" aria-label="菜单" aria-expanded="false">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </button>
       </div>
     </nav>
   </div>
 </header>
+
+<script is:inline>
+  const toggle = document.getElementById('menuToggle');
+  const links = document.getElementById('navLinks');
+  toggle?.addEventListener('click', () => {
+    const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+    toggle.setAttribute('aria-expanded', String(!isOpen));
+    links?.classList.toggle('open');
+  });
+  // 点击链接后关闭菜单
+  links?.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      toggle?.setAttribute('aria-expanded', 'false');
+      links.classList.remove('open');
+    });
+  });
+</script>
 
 <style>
   .header {
@@ -98,9 +120,71 @@ import Search from './Search.astro';
     color: var(--color-primary);
   }
 
+  .menu-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 28px;
+    height: 28px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 2px;
+  }
+
+  .menu-toggle .bar {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: var(--color-text);
+    border-radius: 2px;
+    transition: all 0.3s;
+  }
+
+  .menu-toggle[aria-expanded="true"] .bar:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+  }
+
+  .menu-toggle[aria-expanded="true"] .bar:nth-child(2) {
+    opacity: 0;
+  }
+
+  .menu-toggle[aria-expanded="true"] .bar:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+  }
+
   @media (max-width: 640px) {
+    .menu-toggle {
+      display: flex;
+    }
+
     .nav-links {
       display: none;
+      position: absolute;
+      top: 60px;
+      left: 0;
+      right: 0;
+      flex-direction: column;
+      background: var(--color-bg);
+      border-bottom: 1px solid var(--color-border);
+      padding: 1rem 1.5rem;
+      gap: 0;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    }
+
+    .nav-links.open {
+      display: flex;
+    }
+
+    .nav-links a {
+      padding: 0.75rem 0;
+      font-size: 1rem;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .nav-links a:last-child {
+      border-bottom: none;
     }
   }
 </style>

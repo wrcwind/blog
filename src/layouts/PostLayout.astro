@@ -20,30 +20,80 @@ const formattedDate = pubDate.toLocaleDateString('zh-CN', {
 ---
 
 <BaseLayout title={title} description={description}>
-  <article class="post">
-    <div class="post-header">
-      <h1 class="post-title">{title}</h1>
-      <div class="post-meta">
-        <time datetime={pubDate.toISOString()}>{formattedDate}</time>
-        <span class="separator">·</span>
-        <span>{readingTime} 分钟阅读</span>
-      </div>
-      {tags.length > 0 && (
-        <div class="post-tags">
-          {tags.map(tag => (
-            <a href={`/tags/${tag}`} class="tag">#{tag}</a>
-          ))}
+  <article class="post-wrapper">
+    <div class="post">
+      <div class="post-header">
+        <h1 class="post-title">{title}</h1>
+        <div class="post-meta">
+          <time datetime={pubDate.toISOString()}>{formattedDate}</time>
+          <span class="separator">·</span>
+          <span>{readingTime} 分钟阅读</span>
         </div>
-      )}
+        {tags.length > 0 && (
+          <div class="post-tags">
+            {tags.map(tag => (
+              <a href={`/tags/${tag}`} class="tag">#{tag}</a>
+            ))}
+          </div>
+        )}
+      </div>
+      <div class="post-body">
+        <div class="toc-wrapper" id="tocWrapper">
+          <div class="toc">
+            <div class="toc-title">目录</div>
+            <div class="toc-content" id="tocContent"></div>
+          </div>
+        </div>
+        <div class="post-content">
+          <slot />
+        </div>
+      </div>
+      <Giscus />
     </div>
-    <div class="post-content">
-      <slot />
-    </div>
-    <Giscus />
   </article>
 </BaseLayout>
 
+<script is:inline>
+  function buildTOC() {
+    var content = document.querySelector('.post-content');
+    var tocContent = document.getElementById('tocContent');
+    var tocWrapper = document.getElementById('tocWrapper');
+    if (!content || !tocContent || !tocWrapper) return;
+
+    var headings = content.querySelectorAll('h2, h3');
+    if (headings.length === 0) {
+      tocWrapper.style.display = 'none';
+      return;
+    }
+
+    var fragment = document.createDocumentFragment();
+    headings.forEach(function(h, i) {
+      if (!h.id) h.id = 'heading-' + i;
+      var a = document.createElement('a');
+      a.href = '#' + h.id;
+      a.textContent = h.textContent;
+      a.className = h.tagName === 'H3' ? 'toc-h3' : 'toc-h2';
+      a.addEventListener('click', function(e) {
+        e.preventDefault();
+        h.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+      fragment.appendChild(a);
+    });
+    tocContent.appendChild(fragment);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', buildTOC);
+  } else {
+    buildTOC();
+  }
+</script>
+
 <style>
+  .post-wrapper {
+    max-width: 100%;
+  }
+
   .post {
     max-width: var(--content-width);
     margin: 0 auto;
@@ -95,6 +145,55 @@ const formattedDate = pubDate.toLocaleDateString('zh-CN', {
   .tag:hover {
     background: var(--color-primary);
     color: white;
+  }
+
+  .post-body {
+    position: relative;
+  }
+
+  .toc-wrapper {
+    position: absolute;
+    left: calc(100% + 2rem);
+    top: 0;
+    width: 200px;
+    max-height: 80vh;
+    overflow-y: auto;
+  }
+
+  .toc {
+    position: sticky;
+    top: 80px;
+    padding: 1rem;
+    border-left: 2px solid var(--color-border);
+    font-size: 0.85rem;
+  }
+
+  .toc-title {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--color-text);
+    margin-bottom: 0.75rem;
+  }
+
+  .toc-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .toc-content a {
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    transition: color 0.2s;
+    line-height: 1.5;
+  }
+
+  .toc-content a:hover {
+    color: var(--color-primary);
+  }
+
+  .toc-h3 {
+    padding-left: 1rem;
   }
 
   .post-content {
@@ -168,6 +267,12 @@ const formattedDate = pubDate.toLocaleDateString('zh-CN', {
 
   .post-content :global(tr:nth-child(even)) {
     background: var(--color-bg-secondary);
+  }
+
+  @media (max-width: 1080px) {
+    .toc-wrapper {
+      display: none;
+    }
   }
 
   @media (max-width: 640px) {
